@@ -15,13 +15,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import path
+from django.urls import path, re_path
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from google_auth.views import LoginView, ProfileView, RefreshView
+from rest_framework import permissions
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Swagger API Browser",
+        default_version='v1'
+    ),
+    public=False,
+    permission_classes=[permissions.AllowAny],
+)
 
 def render_file(request, file_name='index.html'):
     return render(request, file_name)
 
 urlpatterns = [
+    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
+
+urlpatterns += [
     path('admin/', admin.site.urls),
     path('', render_file),
-]
+    path('auth/return/', render_file),
+    path('api/auth/login/', LoginView.as_view()),
+    path('api/auth/refresh/', RefreshView.as_view()),
+    path('api/auth/me/', ProfileView.as_view()),
