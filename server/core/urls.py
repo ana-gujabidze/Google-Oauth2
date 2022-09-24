@@ -26,7 +26,7 @@ schema_view = get_schema_view(
         title="Swagger API Browser",
         default_version='v1'
     ),
-    public=True,
+    public=False,
     permission_classes=[permissions.AllowAny],
 )
 
