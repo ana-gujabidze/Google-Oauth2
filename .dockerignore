@@ -1,0 +1,10 @@
+.vscode
+.gitignore
+.dockerignore
+*.log
+*.pot
+*.pyc
+__pychache__/
+**/static/*
+db.sqlite3
+README.md

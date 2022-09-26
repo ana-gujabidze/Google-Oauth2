@@ -45,3 +45,4 @@ urlpatterns += [
     path('api/auth/login/', LoginView.as_view()),
     path('api/auth/refresh/', RefreshView.as_view()),
     path('api/auth/me/', ProfileView.as_view()),
+]
