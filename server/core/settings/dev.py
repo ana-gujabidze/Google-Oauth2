@@ -22,3 +22,6 @@ INSTALLED_APPS.insert(INSTALLED_APPS.index('rest_framework'), 'drf_yasg')
 # Connection configuration to Google OAuth client
 GOOGLE_OAUTH2_CLIENT_ID = config['GOOGLE_OAUTH2_CLIENT_ID']
 GOOGLE_OAUTH2_CLIENT_SECRET = config['GOOGLE_OAUTH2_CLIENT_SECRET']
+
+# JWT configuration
+SIMPLE_JWT['SIGNING_KEY'] = SECRET_KEY
