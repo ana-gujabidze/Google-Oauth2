@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from datetime import timedelta
 
-from datetime import timedelta
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -115,7 +113,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-STATICFILES_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 WHITENOISE_ROOT = os.path.join(BASE_DIR, 'build')
 
