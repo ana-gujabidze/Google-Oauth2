@@ -18,8 +18,9 @@ from django.shortcuts import render
 from django.urls import path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from google_auth.views import LoginView, ProfileView, RefreshView
 from rest_framework import permissions
+
+from google_auth.views import LoginView, ProfileView, RefreshView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -46,3 +47,5 @@ urlpatterns += [
     path('api/auth/refresh/', RefreshView.as_view()),
     path('api/auth/me/', ProfileView.as_view()),
 ]
+
+handler404 = "utils.views.error_404"
