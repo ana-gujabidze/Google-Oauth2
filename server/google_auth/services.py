@@ -10,7 +10,7 @@ def authenticate_user(code: str, redirect_uri: str) -> User:
     google_provider = GoogleProvider
     access_token, id_token = google_provider.google_get_token(code=code, redirect_uri=redirect_uri)
     # validate ID token
-    google_provider.google_validate_id_token(id_token=id_token)
+    # google_provider.google_validate_id_token(id_token=id_token)
     user_profile = google_provider.google_get_user_profile(access_token=access_token)
     user_ext_id = user_profile['ext_id']
 

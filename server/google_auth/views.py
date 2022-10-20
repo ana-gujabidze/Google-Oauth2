@@ -4,9 +4,11 @@ from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import serializers, status
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -24,32 +26,27 @@ class LoginView(APIView):
     @swagger_auto_schema(request_body=LoginInputSerializer)
     def post(self, request, *args, **kwargs):
         serializer = self.LoginInputSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            data = serializer.validated_data
-            user = authenticate_user(code=data.get('code'), redirect_uri=data.get('redirect_uri'))
-            jwt_token = RefreshToken.for_user(user)
-            access_token = str(jwt_token.access_token)
-            refresh_token = str(jwt_token)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        user = authenticate_user(code=data.get('code'), redirect_uri=data.get('redirect_uri'))
+        jwt_token = RefreshToken.for_user(user)
+        access_token = str(jwt_token.access_token)
+        refresh_token = str(jwt_token)
 
-            # Create payload
-            payload = {
-                'access_token': access_token,
-                'refresh_token': refresh_token,
-                'user': {
-                    'id': user.id,
-                    'username': user.username,
-                    'email': user.email,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name
-                }
+        # Create payload
+        payload = {
+            'access_token': access_token,
+            'refresh_token': refresh_token,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name
             }
-            return Response(payload)
-        return Response({
-            'error': {
-                'code': 'invalid_paramter',
-                'message': f'Input validation error: {serializer.errors}'
-            }
-        }, status=status.HTTP_400_BAD_REQUEST)
+        }
+        return Response(payload)
+
 
 class RefreshView(APIView):
 
@@ -61,35 +58,32 @@ class RefreshView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = self.RefreshInputSerializer(data=request.data)
 
-        if serializer.is_valid(raise_exception=True):
-            data = serializer.validated_data
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        try:
             jwt_token = RefreshToken(data['refresh_token'])
-            user_id = jwt_token[api_settings.USER_ID_CLAIM]
-            profile = Profile.objects.get(user_id=user_id)
-            user = profile.user
-            jwt_token = RefreshToken.for_user(user)
-            access_token = str(jwt_token.access_token)
-            refresh_token = str(jwt_token)
+        except TokenError as e:
+            raise ValidationError(e)
+        user_id = jwt_token[api_settings.USER_ID_CLAIM]
+        profile = Profile.objects.get(user_id=user_id)
+        user = profile.user
+        jwt_token = RefreshToken.for_user(user)
+        access_token = str(jwt_token.access_token)
+        refresh_token = str(jwt_token)
 
-            # Create payload
-            payload = {
-                'access_token': access_token,
-                'refresh_token': refresh_token,
-                'user': {
-                    'id': user.id,
-                    'username': user.username,
-                    'email': user.email,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name
-                }
+        # Create payload
+        payload = {
+            'access_token': access_token,
+            'refresh_token': refresh_token,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name
             }
-            return Response(payload)
-        return Response({
-            'error': {
-                'code': 'invalid_paramter',
-                'message': f'Input validation error: {serializer.errors}'
-            }
-        }, status=status.HTTP_400_BAD_REQUEST)
+        }
+        return Response(payload)
 
 
 class ProfileView(APIView):

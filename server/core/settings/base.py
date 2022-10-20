@@ -132,7 +132,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': [
         # 'rest_framework.parsers.JSONParser',
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-    ]
+    ],
+    "EXCEPTION_HANDLER": "utils.exception_handler.custom_exception_handler",
 }
 
 
