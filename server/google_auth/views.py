@@ -17,7 +17,6 @@ from .services import authenticate_user
 
 
 class LoginView(APIView):
-
     class LoginInputSerializer(serializers.Serializer):
         code = serializers.CharField(required=True)
         redirect_uri = serializers.CharField(required=True)
@@ -28,31 +27,30 @@ class LoginView(APIView):
         serializer = self.LoginInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        user = authenticate_user(code=data.get('code'), redirect_uri=data.get('redirect_uri'))
+        user = authenticate_user(code=data.get("code"), redirect_uri=data.get("redirect_uri"))
         jwt_token = RefreshToken.for_user(user)
         access_token = str(jwt_token.access_token)
         refresh_token = str(jwt_token)
 
         # Create payload
         payload = {
-            'access_token': access_token,
-            'refresh_token': refresh_token,
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name
-            }
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+            },
         }
         return Response(payload)
 
 
 class RefreshView(APIView):
-
     class RefreshInputSerializer(serializers.Serializer):
         refresh_token = serializers.CharField(required=True)
-        ref_name = 'refresh_serializer'
+        ref_name = "refresh_serializer"
 
     @swagger_auto_schema(request_body=RefreshInputSerializer)
     def post(self, request, *args, **kwargs):
@@ -61,7 +59,7 @@ class RefreshView(APIView):
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         try:
-            jwt_token = RefreshToken(data['refresh_token'])
+            jwt_token = RefreshToken(data["refresh_token"])
         except TokenError as e:
             raise ValidationError(e)
         user_id = jwt_token[api_settings.USER_ID_CLAIM]
@@ -73,15 +71,15 @@ class RefreshView(APIView):
 
         # Create payload
         payload = {
-            'access_token': access_token,
-            'refresh_token': refresh_token,
-            'user': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name
-            }
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+            },
         }
         return Response(payload)
 
@@ -102,6 +100,6 @@ class LoremIpsumView(APIView):
             Donec tortor massa, interdum in ligula in, dapibus placerat est. Etiam ac lectus sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis ut orci rutrum, porttitor nibh a, auctor nisl. In eget ultrices mi. Nam erat purus, varius eget porttitor vel, tempus eget justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin eu posuere odio. Pellentesque ante urna, gravida facilisis sagittis non, semper nec tortor.
 
             Donec id euismod orci, quis consectetur massa. Fusce sed purus non risus dignissim elementum at suscipit arcu. Donec tincidunt lacus a mi pulvinar, et volutpat odio efficitur. Sed ullamcorper et ex vitae iaculis. Integer id iaculis tortor. Phasellus suscipit elit neque, sit amet mollis velit sollicitudin vel. Nunc feugiat iaculis arcu, ac venenatis est lacinia ac. In felis metus, volutpat eu nibh nec, vulputate viverra nisl. Praesent sollicitudin iaculis sem, in sollicitudin odio tristique at. Aenean eu elementum nibh, a gravida neque. Sed vestibulum magna turpis, nec suscipit dolor ultricies vel. In feugiat leo lacus, eu cursus nisi commodo at.
-            """
+            """,
         }
         return Response(data=data, status=status.HTTP_200_OK)

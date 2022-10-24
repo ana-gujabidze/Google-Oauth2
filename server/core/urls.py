@@ -23,28 +23,27 @@ from rest_framework import permissions
 from google_auth.views import LoginView, LoremIpsumView, RefreshView
 
 schema_view = get_schema_view(
-    openapi.Info(
-        title="Swagger API Browser",
-        default_version='v1'
-    ),
+    openapi.Info(title="Swagger API Browser", default_version="v1"),
     public=False,
     permission_classes=[permissions.AllowAny],
 )
 
-def render_file(request, file_name='index.html'):
+
+def render_file(request, file_name="index.html"):
     return render(request, file_name)
 
+
 urlpatterns = [
-    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    re_path(r"^swagger/$", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    re_path(r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
 
 urlpatterns += [
-    path('admin/', admin.site.urls),
-    path('', render_file),
-    path('api/auth/login/', LoginView.as_view()),
-    path('api/auth/refresh/', RefreshView.as_view()),
-    path('api/lorem_ipsum/', LoremIpsumView.as_view()),
+    path("admin/", admin.site.urls),
+    path("", render_file),
+    path("api/auth/login/", LoginView.as_view()),
+    path("api/auth/refresh/", RefreshView.as_view()),
+    path("api/lorem_ipsum/", LoremIpsumView.as_view()),
     re_path("(?!api).*/", render_file),
 ]
 
