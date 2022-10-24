@@ -18,8 +18,9 @@ from django.shortcuts import render
 from django.urls import path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from google_auth.views import LoginView, LoremIpsumView, RefreshView
 from rest_framework import permissions
+
+from google_auth.views import LoginView, LoremIpsumView, RefreshView
 
 schema_view = get_schema_view(
     openapi.Info(

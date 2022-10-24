@@ -6,8 +6,7 @@ from typing import Any
 
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
-from djangorestframework_camel_case.util import (camelize_re,
-                                                 underscore_to_camel)
+from djangorestframework_camel_case.util import camelize_re, underscore_to_camel
 from rest_framework import exceptions, status
 from rest_framework.views import Response
 from rest_framework_simplejwt.exceptions import InvalidToken
