@@ -13,13 +13,11 @@ from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from google_auth.models import Profile
-from google_auth.serializers import (LoginInputSerializer,
-                                     RefreshInputSerializer)
+from google_auth.serializers import LoginInputSerializer, RefreshInputSerializer
 from google_auth.services import authenticate_user
 
 
 class LoginView(APIView):
-
     @swagger_auto_schema(request_body=LoginInputSerializer)
     def post(self, request, *args, **kwargs):
         serializer = LoginInputSerializer(data=request.data)
@@ -46,7 +44,6 @@ class LoginView(APIView):
 
 
 class RefreshView(APIView):
-
     @swagger_auto_schema(request_body=RefreshInputSerializer)
     def post(self, request, *args, **kwargs):
         serializer = RefreshInputSerializer(data=request.data)
