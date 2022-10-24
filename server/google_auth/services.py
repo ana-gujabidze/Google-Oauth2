@@ -2,8 +2,8 @@ from typing import Tuple
 
 from django.contrib.auth.models import User
 
-from .google_provider import GoogleProvider
-from .models import Profile
+from google_auth.google_provider import GoogleProvider
+from google_auth.models import Profile
 
 
 def authenticate_user(code: str, redirect_uri: str) -> User:
