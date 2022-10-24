@@ -18,9 +18,8 @@ from django.shortcuts import render
 from django.urls import path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from google_auth.views import LoginView, LoremIpsumView, RefreshView
 from rest_framework import permissions
-
-from google_auth.views import LoginView, ProfileView, RefreshView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -42,10 +41,10 @@ urlpatterns = [
 urlpatterns += [
     path('admin/', admin.site.urls),
     path('', render_file),
-    path('auth/return/', render_file),
     path('api/auth/login/', LoginView.as_view()),
     path('api/auth/refresh/', RefreshView.as_view()),
-    path('api/auth/me/', ProfileView.as_view()),
+    path('api/lorem_ipsum/', LoremIpsumView.as_view()),
+    re_path("(?!api).*/", render_file),
 ]
 
 handler404 = "utils.views.error_404"
