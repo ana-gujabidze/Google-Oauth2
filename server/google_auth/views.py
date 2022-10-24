@@ -3,7 +3,7 @@ from datetime import datetime
 from django.conf import settings
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -12,19 +12,17 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.settings import api_settings
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import Profile
-from .services import authenticate_user
+from google_auth.models import Profile
+from google_auth.serializers import (LoginInputSerializer,
+                                     RefreshInputSerializer)
+from google_auth.services import authenticate_user
 
 
 class LoginView(APIView):
-    class LoginInputSerializer(serializers.Serializer):
-        code = serializers.CharField(required=True)
-        redirect_uri = serializers.CharField(required=True)
-        ref_name = "login_serializer"
 
     @swagger_auto_schema(request_body=LoginInputSerializer)
     def post(self, request, *args, **kwargs):
-        serializer = self.LoginInputSerializer(data=request.data)
+        serializer = LoginInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
         user = authenticate_user(code=data.get("code"), redirect_uri=data.get("redirect_uri"))
@@ -48,13 +46,10 @@ class LoginView(APIView):
 
 
 class RefreshView(APIView):
-    class RefreshInputSerializer(serializers.Serializer):
-        refresh_token = serializers.CharField(required=True)
-        ref_name = "refresh_serializer"
 
     @swagger_auto_schema(request_body=RefreshInputSerializer)
     def post(self, request, *args, **kwargs):
-        serializer = self.RefreshInputSerializer(data=request.data)
+        serializer = RefreshInputSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
