@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import GoogleButton from 'react-google-button';
 
-const REACT_APP_GOOGLE_CLIENT_ID = "282681057299-edfed03n141rk369r9if7e9i3ij06uk6.apps.googleusercontent.com";
+const REACT_APP_GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 
 function LoginPage() {
