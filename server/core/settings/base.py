@@ -145,11 +145,8 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': False,
 
     'ALGORITHM': 'HS256',
-    'VERIFYING_KEY': None,
-    'ISSUER': None,
 
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'sub',
 
@@ -161,3 +158,7 @@ SIMPLE_JWT = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'unsafe-none'
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
