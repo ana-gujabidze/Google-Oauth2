@@ -1,15 +1,12 @@
 # Authentification Using Google OAuth2 and JWT
 
-<p>
-<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+![npm](https://img.shields.io/npm/v/npm?color=brightgreen)
+![python](https://img.shields.io/badge/python-3.9.6-brightgreen.svg)
+![node](https://img.shields.io/node/v/npm)
+![code style](https://img.shields.io/badge/code%20style-black-000000.svg)
 
-<img alt="npm" src="https://img.shields.io/npm/v/npm?color=brightgreen">
-<a href="https://www.python.org/downloads/release/python-396/"><img alt="Python version" src="https://img.shields.io/badge/python-3.9.6-brightgreen.svg"></a>
-<img alt="node-current" src="https://img.shields.io/node/v/npm">
-
-<img alt="Github last-commit" src="https://img.shields.io/github/last-commit/ana-gujabidze/Google-Oauth2">
-<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/ana-gujabidze/Google-OAuth2">
-</p>
+![last commit](https://img.shields.io/github/last-commit/ana-gujabidze/Google-Oauth2)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ana-gujabidze/Google-Oauth2)
 
 ---
 The web application allows to sign in using Google OAuth2 and later on use locally generated JSON Web Token(JWT) to communicate between front-end and back-end.
@@ -30,7 +27,11 @@ Django + React web application allows to:
 
 - view user email in navigation dropdown name after authentification, before that dropdown name is populated with Anonymous
 
-- refresh JWT without logging user out
+- refresh JWT without logging user out when only access token has expired
+
+Example of protected area that is available only to authentificated users
+
+![protected_page](__screenshots/protected_area.png?raw=true "Title")
 
 ---
 
