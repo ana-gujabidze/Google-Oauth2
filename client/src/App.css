@@ -82,6 +82,7 @@ code {
   color: white;
 }
 
-.navbar-brand {
+
+.navbar-light .navbar-brand, .navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
   color: white;
 }
