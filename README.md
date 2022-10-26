@@ -1,4 +1,4 @@
-# Authentification Using Google OAuth2 and JWT
+# Authentication Using Google OAuth2 and JWT
 
 ![npm](https://img.shields.io/npm/v/npm?color=brightgreen)
 ![python](https://img.shields.io/badge/python-3.9.6-brightgreen.svg)
@@ -19,15 +19,15 @@ On the back-end JWT authorization endpoints offer two token types — a short-li
 
 Django + React web application allows to:
 
-- login to web application using Google OAuth2
+- login to the web application using Google OAuth2
 
-- have access to protected area only after being loged in
+- have access to protected area only after being logged in
 
-- without authentification to have access only to landing page, which has only Google login button
+- without authentification to have access only to the landing page, which has only a Google login button
 
 - view user email in navigation dropdown name after authentification, before that dropdown name is populated with Anonymous
 
-- refresh JWT without logging user out when only access token has expired
+- refresh JWT without logging the user out when only the access token has expired
 
 Example of protected area that is available only to authentificated users
 
