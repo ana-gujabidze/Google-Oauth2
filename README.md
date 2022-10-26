@@ -54,8 +54,8 @@ Example of protected area that is available only to authentificated users
 Clone the repo and install the dependencies.
 
 ```bash
-git clone https://github.com/ana-gujabidze/Google-Oauth2.git
-cd Google-Oauth2/
+git clone https://github.com/ana-gujabidze/auth_with_google_oauth2_and_jwt.git
+cd auth_with_google_oauth2_and_jwt/
 ```
 
 Download Docker Desktop from [the official website](https://docs.docker.com/desktop/). It will automatically install docker compose for you.
